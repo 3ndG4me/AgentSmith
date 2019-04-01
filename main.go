@@ -11,12 +11,15 @@ import(
     "os/exec"
     "html"
     "bytes"
+    "time"
 )
 
 func main(){
 
-    GetCmd()
-
+    for {
+     GetCmd()
+     time.Sleep(10 * time.Second)
+    }
 }
 
 
