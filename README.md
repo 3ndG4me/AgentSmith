@@ -17,5 +17,5 @@ Golang C2 Agent PoC utilizing web and social media paltforms to issue command an
 
 ## Usage (Agent)
 1. Follow the Basic Setup usage to configure your agent
-2. Build the Agent for deployment: `make {os}-agent` (Be sure you have Go installed and in your path! See Makefile for types of agents you can build)
+2. Build the Agent for deployment: `make agent-{os}` (Be sure you have Go installed and in your path! See Makefile for types of agents you can build)
 3. Deploy to target
