@@ -39,19 +39,19 @@ agent-windows:
 
 # Compile Agent - Linux mips
 agent-mips:
-	export GOOS=linux;export GOARCH=mips;go build ${LDFLAGS} -o ${DIR}/${AGENT}-${M} main.go
+	export GOOS=linux;export GOARCH=mips;go build -o ${DIR}/${AGENT}-${M} main.go
 
 # Compile Agent - Linux arm
 agent-arm:
-	export GOOS=linux;export GOARCH=arm;export GOARM=7;go build ${LDFLAGS} -o ${DIR}/${AGENT}-${A} main.go
+	export GOOS=linux;export GOARCH=arm;export GOARM=7;go build -o ${DIR}/${AGENT}-${A} main.go
 
 # Compile Agent - Linux x64
 agent-linux:
-	export GOOS=linux;export GOARCH=amd64;go build ${LDFLAGS} -o ${DIR}/${AGENT}-${L} main.go
+	export GOOS=linux;export GOARCH=amd64;go build -o ${DIR}/${AGENT}-${L} main.go
 
 # Compile Agent - Darwin x64
 agent-darwin:
-	export GOOS=darwin;export GOARCH=amd64;go build ${LDFLAGS} -o ${DIR}/${AGENT}-${D} main.go
+	export GOOS=darwin;export GOARCH=amd64;go build -o ${DIR}/${AGENT}-${D} main.go
 
 clean:
 	rm -rf ${DIR}*
